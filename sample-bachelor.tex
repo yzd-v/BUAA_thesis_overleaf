@@ -1,0 +1,51 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[bachelor,openany,oneside,color]{style/buaathesis}
+
+% 参考文献
+\usepackage{style/gbt7714}
+% 参考文献输出方式，numerical为按照出现顺序，authoryear为按照作者姓名和年份
+\citestyle{numerical}
+% \citestyle{authoryear}
+
+% 取消链接高亮
+\hypersetup{hidelinks}
+\begin{document}
+
+% 用户信息
+\include{data/com_info}
+\include{data/bachelor/bachelor_info}
+
+% 任务书信息
+\include{data/bachelor/assign}
+
+% 页眉页脚样式
+\pagestyle{mainmatter}
+% 封面、任务书、声明
+\maketitle
+% 摘要
+\include{data/abstract}
+% 目录
+\tableofcontents
+
+% 正文页码样式
+\mainmatter
+
+% 正文
+\include{data/chapter1-intro}
+\include{data/chapter2-config}
+\include{data/chapter3-download}
+\include{data/chapter4-basic}
+\include{data/chapter5-usage}
+\include{data/chapter6-implement}
+\include{data/chapter7-conclusion}
+
+% 致谢
+\include{data/bachelor/acknowledgement}
+% 参考文献
+\include{data/reference}
+
+% 附录
+\appendix
+\include{data/appendix1-faq}
+\include{data/appendix2-contactus}
+\end{document}

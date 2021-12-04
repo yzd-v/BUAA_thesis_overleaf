@@ -1,0 +1,188 @@
+% !Mode:: "TeX:UTF-8"
+\chapter{环境配置}
+
+\section{C\TeX{}套装 [Windows Only]}
+
+C\TeX{}套装是Windows下为中文优化的\LaTeX{}系统套件，主要基于MiKTeX系统，
+集成了编辑器WinEdt和其他相关软件。整个系统封装在一个安装程序中，
+安装方法与常规软件相同，无需任何配置，适合大部分Windows用户使用。
+
+\begin{description}
+    \item[下载地址] \hfill
+    \begin{description}
+        \item[官方页面]
+            \url{http://www.ctex.org/CTeXDownload}
+        \item[清华镜像]
+            \url{https://mirrors.tuna.tsinghua.edu.cn/ctex/unstable/}
+        \item[中科大镜像]
+            \url{http://mirrors.ustc.edu.cn/ctex/unstable/}
+    \end{description}
+    \item[安装方法] \hfill
+        \begin{itemize}
+            \item[] 与常规软件的安装方法类似
+            \item[] 一直下一步稍加一些自定义（如安装路径）即可
+            \item[] {\bf 注意：} 安装程序在某些情况下可能覆盖PATH环境变量，请在安装前注意备份PATH环境变量
+        \end{itemize}
+\end{description}
+
+\section{\TeX{}Live [ Windows \& Linux ]}
+
+\TeX{}是自由软件，有很多发行版本，就像Linux的Ubuntu、Fedora等等。
+每个发行版本都是一套工具集合，包括plain\TeX{}，\LaTeX{}，pdf\TeX{}，dvips等。
+其中比较流行的是\TeX{}Live，也包含在CTAN的开源镜像中，
+目前的最新版本是\TeX{}Live 2016。
+
+推荐通过下载ISO镜像文件的方式安装：
+\begin{description}
+    \item[官方说明]
+        \url{http://www.tug.org/texlive/acquire-iso.html}
+    \item[下载地址] 官方地址会自动跳转寻找"最近"镜像，还有几个较快的教育网镜像
+    \begin{description}
+        \item[官方地址]
+            \url{http://mirror.ctan.org/systems/texlive/Images/texlive2016.iso}
+        \item[清华镜像]
+            \url{http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/}
+        \item[中科大镜像]
+            \url{https://mirrors.ustc.edu.cn/CTAN/systems/texlive/Images/}
+    \end{description}
+    \item[安装方法] \hfill
+    \begin{enumerate}
+        \item 通过虚拟光驱挂载镜像也可以直接打开或解压缩不过会比较慢
+        \item 双击运行光盘镜像或者运行脚本
+        \item[] Windows 用户可以直接双击运行\textsl{install-tl.bat}
+        \item[] Linux 用户可以在终端下执行命令\textsl{./install-tl}
+        \item 按照提示下一步即可，安装大致耗时10$\sim$20分钟，受机器配置影响。
+    \end{enumerate}
+\end{description}
+
+当然官方也提供了通过网络安装的方式，虽然通过可以通过镜像选择达到比较快的速度，
+但是这里简便期间不再赘述，有兴趣的同学可以参考官方说明
+\url{http://www.tug.org/texlive/acquire-netinstall.html}。
+
+\section{Mac\TeX{} [ Mac ]}
+
+Mac\TeX{}是基于\TeX{}Live为Mac系统设计的套件。
+
+\begin{description}
+    \item[官方网站]
+        \url{http://tug.org/mactex/}
+    \item[下载地址] 官方地址会自动跳转寻找"最近"镜像，还有几个较快的教育网镜像
+    \begin{description}
+        \item[官方地址]
+            \url{http://mirror.ctan.org/systems/mac/mactex/MacTeX.pkg}
+        \item[清华镜像]
+            \url{http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/mac/mactex/}
+        \item[中科大镜像]
+            \url{https://mirrors.ustc.edu.cn/CTAN/systems/mac/mactex/}
+    \end{description}
+    \item[安装方法] 同一般软件安装，下一步即可
+\end{description}
+
+\section{兼容性}
+
+本模板依赖v2.0及以上版本的ctex包，\TeX{}Live 2015及以上版本、C\TeX{}2.9.3 可以正常使用。
+对于低版本的\LaTeX{}发行版，需要使用包管理器升级ctex宏包。
+
+\section{安装字体 [ Linux ]}
+
+北航的毕业设计论文要求使用Times New Roman和华文行楷这两种字体，在Linux系统上，这两种字
+是没有预装在系统里的，因此Linux用户需要手动安装字体才能正常使用本模板。本节将以Ubuntu系统
+为例演示字体的安装。
+
+首先需要获取字体文件，Windows系统默认包含了Times New Roman和华文行楷这两种字体，可以从
+{\verb C:\Windows\Fonts\ }文件夹下将字体文件拷贝出来（显示为{\verb STXingkai }和
+{\verb Times New Roman }），当然，用户也可以从其他途径获取这两个字体文件。然后将字体文件
+拷贝到Ubuntu的{\verb /usr/share/fonts }目录下，为了方便管理，可以在这些外部字体放在一个新
+文件夹中：
+\begin{lstlisting}[
+    language={bash},
+    caption={拷贝字体文件},
+    label={copy-fonts},
+]
+sudo cp <your font files> /usr/share/fonts/msfonts/
+\end{lstlisting}
+然后将字体文件的权限设置为644：
+\begin{lstlisting}[
+    language={bash},
+    caption={设置字体文件权限},
+    label={set-fonts-permission},
+]
+sudo chmod 644 /usr/share/fonts/msfonts/*
+\end{lstlisting}
+接下来，进入到{\verb /usr/share/fonts/msfonts } 目录下，依次运行以下三个命令：
+\begin{lstlisting}[
+    language={bash},
+    caption={安装字体},
+    label={install-fonts},
+]
+sudo mkfontscale
+sudo mkfontdir
+sudo fc-cache -fv
+\end{lstlisting}
+当看到命令行输出
+\begin{lstlisting}[
+    language={bash},
+    caption={正常输出结果},
+    label={install-font-success},
+]
+fc-cache: succeeded
+\end{lstlisting}
+时，就完成了字体的安装。
+
+\section{关于编辑器}
+
+以上介绍了三款\LaTeX{}套装，涵盖了主流的三大平台，除了C\TeX{}自带了WinEdt，
+其余两款均需要自己选择编辑器，理论上任何文本编辑器都是可以使用的，
+如Windows上的Notepad++，Linux/MacOS上的vim，emacs，
+一方面要考虑对\LaTeX{}的支持，一方面还是自己的熟悉程度。
+
+这里推荐一款大众化的编辑器\TeX{}maker，它是跨平台的，支持Windows、Linux和MacOS。
+
+\begin{description}
+    \item[官方网站]
+        \url{http://www.xm1math.net/texmaker/}
+    \item[下载地址]
+        \url{http://www.xm1math.net/texmaker/download.html}
+    \item[相关说明]
+    \begin{itemize}
+        \item 安装同一般软件的安装
+        \item 配置Xe\LaTeX{}的编译，选择菜单栏“选项”->“配置\TeX{}Maker”，
+        \item[] 在“\LaTeX{}”一栏填写
+            \texttt{xelatex -interaction=nonstopmode\%.tex}
+    \end{itemize}
+\end{description}
+
+\section{关于编译}
+
+\LaTeX{}的文件是通过编译生成的，对于本模板和毕业设计论文而言，
+需要经过代码\ref{code-compile}所示步骤（以sample-bachelor.tex为例）：
+\begin{lstlisting}[
+    language={bash},
+    caption={编译步骤},
+    label={code-compile},
+]
+xelatex sample-bachelor.tex
+bibtex  sample-bachelor.aux
+xelatex sample-bachelor.tex
+xelatex sample-bachelor.tex
+\end{lstlisting}
+当然，我们在模板里也提供了编译的执行脚本。
+
+\subsection{批处理 [ Windows only ]}
+
+进入cmd（Win+R，然后输入cmd），cd到BUAAthesis对应目录，
+如{\verb D:\BUAAthesis\ }，然后运行{\verb msmake }即可。
+
+\subsection{Makefile [ Windows(cygwin) / Linux / MacOS ]}
+需要要你的命令行环境支持Make，cd到BUAAthesis相应目录，
+目前支持如代码\ref{code-make}所示的功能:
+\begin{lstlisting}[
+    language={bash},
+    caption={make 命令},
+    label={code-make},
+]
+make bachelor # 编译本科生的\LaTeX{}（文件默认项，亦可直接输入make）
+make master # 编译研究生的\LaTeX{}文件
+make clean # 删除编译过程中生成的文件（除了pdf）
+make depclean # 删除编译过程中生成的文件（包括pdf）
+\end{lstlisting}

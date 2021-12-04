@@ -1,0 +1,581 @@
+% !Mode:: "TeX:UTF-8"
+\chapter{\LaTeX{}基础知识}
+\label{chapter-basic}
+
+本章主要为常用示例，推荐入门用户参照本文档的相应代码进行编写，
+编写过程中主要考虑论文写作过程中主要使用到的样式类型，
+更全面的\LaTeX{}基础语法请常见推荐的入门文档。
+% TODO(huxuan): Add reference of recommended document
+
+\section{\LaTeX{}的优势}
+\label{sec-latex-advantage}
+
+\subsection{样式格式}
+\label{subsec-style}
+
+\LaTeX{}可以实现内容和格式的分离，使得专注内容和忽略格式成为可能。
+结合已有的模版，用户可以利用最基本的文本编辑器完成复杂格式文档的书写。
+
+你不需要关心整个论文中任何的标题、目录、正文等所有内容的字体、字号，
+还有段落的首行缩进、段前段后的间隔，利用本模版即可完成所有的工作。
+包括目录（包括表格目录等）本身以及所有章节、图表的序号均为自动生成，
+\LaTeX{}都会自动帮你完成其他工作，你需要做的只有一个---专注于你写的内容。
+
+\subsection{版本管理}
+\label{subsec-version-control}
+
+用\LaTeX{}编写的文档都是纯文本文件，所以可以使用版本管理，
+正如你现在所看到的说明文档，是和\LaTeX{}模版一起托管在了Github上。
+至于版本管理及其好处不在此赘述，感兴趣的同学请自行了解。
+
+\section{字体}
+\label{sec-font}
+
+毕设论文一般不应过多使用字体。模版也已经设置好默认字体：{\bf 宋体}
+和{\bf Times New Roman}字体。如有需要特别强调的地方，可参考以下示例。
+\begin{itemize}
+    \item {\heiti 床前明月光，疑是地上霜。举头望明月，低头思故乡。}
+    \item {\bf 床前明月光，疑是地上霜。举头望明月，低头思故乡。}
+    \item \textbf{To be, or not to be, that's a question.}
+    \item \texttt{To be, or not to be, that's a question.}
+\end{itemize}
+
+\section{特殊符号}
+\label{sec-symbol}
+
+由于\LaTeX{}命令需要用到一些符号，因此一些特殊符号的录入需要特殊处理。
+比较常见的有“\% \$ \& \{ \} \# \_ \^{} \textbackslash”等，
+其他符号请自行搜索或参考tex自带的文档。
+% TODO(huxuan): Add reference of symbol document
+
+\section{长度单位和命令}
+\label{sec-length}
+
+\begin{itemize}
+    \item 常规长度单位
+    \begin{description}
+        \item[cm] 厘米
+        \item[in] 英寸
+    \end{description}
+    \item 文字相关长度，适用于与文字混排
+    \begin{description}
+        \item[em] 当前字体字符“M”的宽度，常用于水平距离
+        \item[ex] 当前字体字符“x”的宽度，常用于竖直距离
+    \end{description}
+    \item 页面相关长度，适用于图表等浮动元素
+    \begin{description}
+        \item[\textbackslash textwidth]  页面主体文字部分的宽度
+        \item[\textbackslash textheight] 页面主体文字部分的高度
+    \end{description}
+\end{itemize}
+
+\section{空格、换行与分段}
+\label{sec-space-linkbreak-par}
+
+在\LaTeX{}中，换行都会被忽略，连续的空格都会被认为是一个空格。
+需使用空格时可以选择表\ref{tab-space}中适当的命令。换行与分段是不同的概念，
+换行只是重新开始一行，新的段落需通过一个单独的空行实现。
+故编写\LaTeX{}源文件时推荐以标点为间隔换行，一行不超过80个字符，
+示例见本文档源文件。
+
+\begin{table}
+    \centering
+    \caption{\LaTeX{}中的空格}
+    \label{tab-space}
+    \begin{tabular}{l|l}
+        \hline
+        \verb|\qquad| & 当前字体下2个字母“M”的宽度 \\ \hline
+        \verb|\quad|  & 当前字体下1个字母“M”的宽度 \\ \hline
+        \verb|\ |     & 当前字体下1/3个字母“M”的宽度（斜杠后是一个空格） \\ \hline
+        \verb|\;|     & 当前字体下2/7个字母“M”的宽度 \\ \hline
+        \verb|\,|     & 当前字体下1/6个字母“M”的宽度 \\ \hline
+        \verb|\!|     & {\bf 缩进}当前字体下1/6个字母“M”的宽度 \\ \hline
+    \end{tabular}
+\end{table}
+
+\section{标签和引用}
+\label{sec-label-ref}
+
+标签和引用是用来生成如“见图6.4”等类似语句中的"6.4"这样的序号，
+它的好处是当你改变顺序或者删除之前的某一个图表等内容时，
+所有序号会在下次编译时自动重排。
+
+设置标签是\verb|\label{}|命令，参数为该标签的名称，在引用时使用。
+引用标签是\verb|\ref{}|命令，参数为设定好的对应标签名称。
+引用标签所在页的页码是\verb|\pageref{}|命令，参数也是设定好的对应标签名称。
+设置标签也是\LaTeX{}编码时的一个好习惯，推荐在即使用不到的情况下，
+也给所有的章节和图表等内容都设定标签，示例见本文档源文件。
+
+\section{章、节、条、款、项}
+\label{sec-title}
+
+\subsection{章、节、条}
+\label{subsec-chap-etc}
+
+\begin{description}
+    \item[章] \verb|\chapter{|章标题\}
+    \item[节] \verb|\section{|节标题\}
+    \item[条] \verb|\subsection{|条标题\}
+\end{description}
+
+\subsection{款、项}
+\label{subsec-item}
+条目环境即目录结构中的款和项分为itemize，enumerate，description三种。
+itemize是最简单的，enumerate是带序号的，description是带描述的，
+具体示例如下：
+
+\begin{enumerate}
+    \item enumerate第一条：
+        \begin{itemize}
+            \item itemize第一点。
+            \item itemize第二点。
+        \end{itemize}
+    \item enumerate第二条：
+        \begin{description}
+            \item[观点三] description第三点。
+            \item[观点四] description第四点。
+        \end{description}
+\end{enumerate}
+
+默认情况下，列表项正文如果较长，列表项的内容将与第一行保持一致的缩进，例如
+
+\begin{enumerate}
+\item 列表项短文本
+\item 列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本
+列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本
+\end{enumerate}
+
+使用\verb|itemize|或\verb|enumerate|环境时，加上\verb|[wide]|选项就可以解决这个问题，
+并且使用\verb|enumerate|环境创建的列表中的项同样会自动编号，
+例如\verb|\begin{enumerate}[wide]|的效果：
+
+\begin{enumerate}[wide]
+\item 列表项短文本
+\item 列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本
+列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本列表项长文本
+\end{enumerate}
+
+\section{图形}
+\label{sec-figure}
+插入图形时可以使用\texttt{figure}环境，示例如图\ref{fig-sample}所示。
+其中figure环境的参数\verb|[h!]|表示尽量排版在当前位置，一般情况下照用即可。
+\verb|\includegraphics|的参数\verb|[width=90bp]|是图片大小的设置，
+也可以使用height或者两个一起使用，设置其中一个即可实现等比例缩放。
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=90bp]{figure/buaamark.eps}
+    \caption{校徽}
+    \label{fig-sample}
+\end{figure}
+
+\section{表格}
+\label{sec-table}
+
+\subsection{浮动环境}
+\label{subsec-table-float}
+\texttt{table}为表格的浮动环境，主要用于添加标题和标签
+\texttt{tabular}为表格环境，通过参数定义表格列方向的样式，
+如\verb+{l||c|r}+表示表格共三列，第一列左对齐{\bf l}，
+第二列居中对齐{\bf c}，第三列右对齐{\bf r}。
+其中前两列用两条竖线分隔，后两列之间只有一条竖线。
+表格行方向的横线用\verb|\hline|表示，横线或竖线均可多条。
+每一行中的列用“\&”作为间隔符，每一行之间使用“\verb|\\|”换行，
+示例见表格\ref{tab-sample}。
+\begin{table}
+    \centering
+    \caption{浮动表格示例}
+    \label{tab-sample}
+    \begin{tabular}{l||c|r}
+        \hline
+        第一列 & 第二列   & 第三列 \\ \hline \hline
+        左     & 居中对齐 & 右对齐 \\ \hline
+        左对   & 居中     & 右对   \\ \hline
+        左对齐 & 对齐     & 右     \\ \hline
+    \end{tabular}
+\end{table}
+如果在表格中需要使用脚注(footnote)功能，则需要将浮动表格环境置于一个minipage中，
+否则脚注会被内容所吞掉。比如下表所示。但目前能力有限，无法将此表格居中，也无法添加
+表格标题和引用。待改进。
+
+\begin{minipage}[h]{\textwidth}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        aaa\footnote{test} & bbb & ccc \\
+        \hline
+    \end{tabular}
+\end{minipage}
+
+\subsection{三线表格}
+\label{three-line-table}
+
+论文中给出的表格示例为三线表格，在\LaTeX{}中制作三表表格也非常容易。使用\verb|\toprule|、
+\verb|\midrule|、\verb|\bottomrule|这三个命令来绘制横分割线即可。以本科生毕业设计手册中的
+一个表格\ref{tab-three-line-table-example}为例：
+
+\begin{table}
+    \centering
+    \caption{降压损失计算结果}
+    \label{tab-three-line-table-example}
+    \begin{tabular}{lcr}
+        \toprule
+        换热器 & 热边压降损失 & 冷边压降损失 \\
+        \midrule
+        初级   & 2974.37      & 2931.52      \\
+        次级   & 2924.65      & 3789.76      \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{列合并和行合并}
+\label{subsec-tab-col-row}
+列合并用\verb|\multicolumn{#1}{#2}{#3}|命令，\#1为所合并的列数，
+\#2为该列的样式，\#3为该列中的内容，示例如表\ref{tab-col}。
+其中合并了第二行的二三列，合并的列数为2，样式是“c|”。需要注意的是，
+列分隔符包含两列间可能的竖线（根据表格样式），故只需指定右侧是否有竖线即可。
+
+行合并的命令为\verb|\multirow{#1}{#2}{#3}|，参数\#1和\#3与列合并相同。
+\#2为行合并单元格的宽度，一般用*来表示默认的计算值，
+行合并后表格线一般是多段间断的线，需要使用命令\verb|\cline{X-Y}|，
+来表示从第X列起始到第Y列结尾的横线，多段横线依次指定即可，
+示例如表\ref{tab-row}所示，被合并的单元格只需留空即可。
+
+\begin{table}
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \caption{列合并示例}
+        \label{tab-col}
+        \begin{tabular}{l|l|l|l}
+            \hline
+            1.1 & 1.2 & 1.3                       & 1.4 \\ \hline
+            2.1 & \multicolumn{2}{c|}{2.2 \& 2.3} & 2.4 \\ \hline
+            3.1 & 3.2 & 3.3                       & 3.4 \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \caption{行合并示例}
+        \label{tab-row}
+        \begin{tabular}{l|l|l}
+            \hline
+            1.1 & 1.2                       & 1.3 \\ \hline
+            2.1 & \multirow{2}*{2.2 \& 3.2} & 2.3 \\ \cline{1-1} \cline{3-3}
+            3.1 &                           & 3.3 \\ \hline
+            4.1 & 4.2                       & 4.3 \\ \hline
+        \end{tabular}
+    \end{minipage}
+\end{table}
+
+\section{数学公式}
+\label{sec-math}
+数学公式分为内嵌行公式和独立行公式。内嵌行公式是与正文段落混合排布的公式，
+\verb|$ $|表示内嵌行公式的环境，如$sin^2{\alpha}+cos^2{\alpha}=1$。独立行公式是独占一行的公式，
+独立行公式分为两种，一种是后面不带公式编号，如下方公式所示。$$\begin{Bmatrix}1 & 2\\3 &4\end{Bmatrix}$$
+另外一种是常用的带公式编号的独立行公式，推荐使用equation环境来自动实现独立行公式的编号，示例见公式\ref{equ-sample}。
+\begin{equation}
+    \label{equ-sample}
+    E=mc^2
+\end{equation}
+
+一般的数学公式只需掌握几个简单的命令，复杂的数学公式可能会用到更多的命令，
+更深入的数学公式相关内容请参见文档。
+% TODO(huxuan): Add reference of recommended document relatex to formula
+% 数学符号可以翻阅symbols.pdf，或者使用工具http://detexify.kirelabs.org/classify.html
+
+\section{使用listings显示代码}
+\label{sec-listings}
+使用\texttt{listings}环境可以进行更美观的代码整理和展示。
+代码\ref{code-c-sample}即为一个简单示例。
+\begin{lstlisting}[
+    language={C},
+    caption={一段C源代码},
+    label={code-c-sample},
+]
+#include <stdio.h>
+
+void main()
+{
+    printf("Hello, world!");
+}
+\end{lstlisting}
+
+\section{更复杂的操作}
+\label{sec-more}
+
+\subsection{多图排列}
+\label{subsec-multi-fig}
+两个或多个图形并排排列，可以参照图\ref{fig-mini-l}和\ref{fig-mini-r}的示例代码。
+\begin{figure}[h!] % [h!] 表示尽量排在当前位置
+    \begin{minipage}{.5\textwidth} % .5\textwidth 表示正文宽度的一半
+        \centering
+        \includegraphics[width=0.35\textwidth]{figure/buaamark.eps}
+        \caption{并排的左图}
+        \label{fig-mini-l}
+    \end{minipage}
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.35\textwidth]{figure/buaamark.eps}
+        \caption{并排的右图}
+        \label{fig-mini-r}
+    \end{minipage}
+\end{figure}
+
+图\ref{fig-sub}为子图排列，两个子图有各自的图题，
+分别为图\ref{fig-sub-l}和图\ref{fig-sub-r}，并有一个共同的图题。
+\begin{figure}[h!]
+    \centering
+    \subfigure[并排小图a]{
+        \label{fig-sub-l}
+        \includegraphics[width=.2\textwidth]{figure/buaamark.eps}
+    }
+    \hspace{7em} % 水平间隔
+    \subfigure[并排小图b]{
+        \label{fig-sub-r}
+        \includegraphics[width=.2\textwidth]{figure/buaamark.eps}
+    }
+    \caption{子图并排的示例}
+    \label{fig-sub}
+\end{figure}
+
+若要将四个或多个图形以矩阵形式排列，可以参见图\ref{fig-matrix}，
+四个子图分别为图\ref{fig-matrix-a}、图\ref{fig-matrix-b}、
+图\ref{fig-matrix-c}和图\ref{fig-matrix-d}。
+\begin{figure}[h!]
+    \subfigcapskip=4pt %加入这行控制间距
+    \centering
+    \begin{tabular}{cc}
+        \subfigure[矩阵子图A]{
+            \label{fig-matrix-a}
+            \includegraphics[width=.18\textwidth]{figure/buaamark.eps}
+        } \hspace{7em} &
+        \subfigure[矩阵子图B]{
+            \label{fig-matrix-b}
+            \includegraphics[width=.18\textwidth]{figure/buaamark.eps}
+        } \\
+        \subfigure[矩阵子图C]{
+            \label{fig-matrix-c}
+            \includegraphics[width=.18\textwidth]{figure/buaamark.eps}
+        } \hspace{7em} &
+        \subfigure[矩阵子图D]{
+            \label{fig-matrix-d}
+            \includegraphics[width=.18\textwidth]{figure/buaamark.eps}
+        }\\
+    \end{tabular}
+    \caption{矩形的subfig排列}
+    \label{fig-matrix}
+\end{figure}
+
+复杂的图形排列基本到此为止，一般情况下很少会用到也并不推荐使用，
+如果对图形的编排的兴趣，可以参考推荐书目。
+% TODO(huxuan): Add reference to 《\LaTeX{}插图指南》
+
+\subsection{图形表格等混排}
+\label{subsec-morefigtab}
+图形表格的并排显示可以参照图\ref{fig-tab-mix}和表格\ref{tab-fig-mix}的实现。
+大体思路同图形的并排排列，亦可扩展至其他元素类型。
+\begin{figure}[h!]
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figure/fgbt.jpg}
+        \figcaption{左侧的图片} % 用于生成图片的编号
+        \label{fig-tab-mix}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \begin{tabular}{c||c|c} \hline
+            Day       & Data & other \\ \hline \hline
+            Monday    & 1    & 1.5   \\
+            Tuesday   & 2    & 2.5   \\
+            Wednesday & 3    & 3.5   \\
+            Thursday  & 4    & 4.5   \\
+            Friday    & 5    & 5.5   \\ \hline
+        \end{tabular}
+        \tabcaption{右侧的表格} % 用于生成表格的编号
+        \label{tab-fig-mix}
+    \end{minipage}
+\end{figure}
+
+\subsection{长表格}
+\label{subsec-longtab}
+当表格超过一页时可以使用longtable环境，如表\ref{tab-long-example}所示。
+
+\begin{longtable}{|l|l|l|}
+    % 表格的首个表头
+    \caption{长表格示例\label{tab-long-example}} \\
+    \hline
+    \multicolumn{1}{|c|}{\textbf{Time (s)}} &
+    \multicolumn{1}{c|}{\textbf{Triple chosen}} &
+    \multicolumn{1}{c|}{\textbf{Other feasible triples}} \\ \hline
+    \endfirsthead
+    % 表格的其他表头
+    \multicolumn{3}{l}{{\bfseries\tablename\ \thetable{} --接\,上\,页}} \\
+    \hline \multicolumn{1}{|c|}{\textbf{Time (s)}} &
+    \multicolumn{1}{c|}{\textbf{Triple chosen}} &
+    \multicolumn{1}{c|}{\textbf{Other feasible triples}} \\ \hline
+    \endhead
+    % 表格的其他表尾
+    \hline \multicolumn{3}{|r|}{{接\,下\,页}} \\ \hline
+    \endfoot
+    % 表格的最后表尾
+    \hline \hline
+    \endlastfoot
+    0      & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0) \\
+    2745   & (1, 12, 10980) & (1, 13,  8235), (2,  2,    0), (2, 3, 0) \\
+    5490   & (1, 12, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    8235   & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    10980  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    13725  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    16470  & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    19215  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    21960  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    24705  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    27450  & (1, 12, 16470) & (1, 13, 13725), (2,  2, 2745), (2, 3, 0) \\
+    30195  & (2,  2,  2745) & (2,  3,     0), (3,  1,    0)            \\
+    32940  & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    35685  & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    38430  & (1, 13, 10980) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    41175  & (1, 12, 13725) & (1, 13, 10980), (2,  2, 2745), (2, 3, 0) \\
+    43920  & (1, 13, 10980) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    150975 & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    153720 & (1, 12, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    156465 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    159210 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    161955 & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    164700 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    150975 & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    153720 & (1, 12, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    156465 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    159210 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    161955 & (1, 13, 16470) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+    164700 & (1, 13, 13725) & (2,  2,  2745), (2,  3,    0), (3, 1, 0) \\
+\end{longtable}
+
+
+\subsection{定理定义环境}
+\label{subsec-thm}
+本模版支持的定理定义环境及示例：如假设\ref{thm-assumption-example}、
+定义\ref{thm-definition-example}、命题\ref{thm-proposition-example}、
+注释\ref{thm-remark-example}、公理\ref{thm-axiom-example}、
+引理\ref{thm-lemma-example}、定理\ref{thm-theorem-example}、
+证明\ref{thm-proof-example}、推论\ref{thm-corollary-example}、
+例\ref{thm-example-example}、练习\ref{thm-exercise-example}、
+猜想\ref{thm-conjecture-example}、问题\ref{thm-problem-example}。
+
+\begin{assumption}
+    \label{thm-assumption-example}
+    待月西厢下，迎风户半开；隔墙花影动，疑是玉人来。
+    \begin{eqnarray}
+        \label{equ-example-assumption}
+        c & = & a^2 - b^2\\
+          & = & (a+b)(a-b)
+    \end{eqnarray}
+\end{assumption}
+
+\begin{definition}
+    \label{thm-definition-example}
+    子曰：「道千乘之国，敬事而信，节用而爱人，使民以时。」
+\end{definition}
+
+\begin{proposition}
+    \label{thm-proposition-example}
+    曾子曰：「吾日三省吾身 --- 为人谋而不忠乎？与朋友交而不信乎？传不习乎？」
+\end{proposition}
+
+\begin{remark}
+    \label{thm-remark-example}
+    天不言自高，水不言自流。
+    \begin{gather*}
+        \begin{split}
+            \varphi(x,z)
+            & = z-\gamma_{10}x-\gamma_{mn}x^mz^n\\
+            & = z-Mr^{-1}x-Mr^{-(m+n)}x^mz^n
+        \end{split} \\[6pt]
+        \begin{align}
+            \zeta^0 & = (\xi^0)^2,\\
+            \zeta^1 & = \xi^0\xi^1,\\
+            \zeta^2 & = (\xi^1)^2,
+        \end{align}
+    \end{gather*}
+\end{remark}
+
+\begin{axiom}
+    \label{thm-axiom-example}
+    两点间直线段距离最短。
+    \begin{align}
+        x & \equiv y+1\pmod{m^2}\\
+        x & \equiv y+1\mod{m^2}\\
+        x & \equiv y+1\pod{m^2}
+    \end{align}
+\end{axiom}
+
+\begin{lemma}
+    \label{thm-lemma-example}
+    《猫和老鼠》是我最爱看的动画片。
+    \begin{multline*}%\tag*{[a]} % 这个不出现在索引中
+        \int_a^b\biggl\{\int_a^b[f(x)^2g(y)^2+f(y)^2g(x)^2]
+        -2f(x)g(x)f(y)g(y)dx\biggr\}dy \\
+        =\int_a^b\biggl\{g(y)^2\int_a^bf^2
+        +f(y)^2\int_a^bg^2-2f(y)g(y)\int_a^b fg\biggr\}dy
+    \end{multline*}
+\end{lemma}
+
+\begin{theorem}
+    \label{thm-theorem-example}
+    犯我强汉者，虽远必诛\hfill --- 陈汤（汉）
+\end{theorem}
+
+\begin{proof}
+    \label{thm-proof-example}
+    燕赵古称多感慨悲歌之士。董生举进士，连不得志于有司，怀抱利器，郁郁适兹土，吾
+    知其必有合也。董生勉乎哉？
+
+    夫以子之不遇时，苟慕义强仁者，皆爱惜焉，矧燕、赵之士出乎其性者哉！然吾尝闻
+    风俗与化移易，吾恶知其今不异于古所云邪？聊以吾子之行卜之也。董生勉乎哉？
+
+    吾因子有所感矣。为我吊望诸君之墓，而观于其市，复有昔时屠狗者乎？为我谢
+    曰：“明天子在上，可以出而仕矣！” \hfill --- 韩愈《送董邵南序》
+\end{proof}
+
+\begin{corollary}
+    \label{thm-corollary-example}
+    四川话配音的《猫和老鼠》是世界上最好看最好听最有趣的动画片。
+    \begin{alignat}{3}
+        V_i & =v_i - q_i v_j, & \qquad X_i & = x_i - q_i x_j, &
+        \qquad U_i & = u_i, \qquad \text{for $i\ne j$;} \\
+        V_j & = v_j,          & \qquad X_j & = x_j, &
+        \qquad U_j & u_j + \sum_{i\ne j} q_i u_i.
+    \end{alignat}
+\end{corollary}
+
+\begin{example}
+    \label{thm-example-example}
+    大家来看这个例子。
+    \begin{equation}
+        \left\{
+        \begin{array}{l}
+            \nabla f({\mbox{\boldmath $x$}}^*)-
+                \sum\limits_{j=1}^p\lambda_j\nabla g_j
+                ({\mbox{\boldmath $x$}}^*)=0 \\ [0.3cm]
+            \lambda_jg_j({\mbox{\boldmath $x$}}^*)=0,
+                \quad j=1,2,\cdots,p \\ [0.2cm]
+            \lambda_j\ge 0,\quad j=1,2,\cdots,p.
+        \end{array}
+        \right.
+    \end{equation}
+\end{example}
+
+\begin{exercise}
+    \label{thm-exercise-example}
+    清列出 Andrew S. Tanenbaum 和 W. Richard Stevens 的所有著作。
+\end{exercise}
+
+\begin{conjecture}
+    \label{thm-conjecture-example}
+    \textit{Poincare Conjecture} If in a closed three-dimensional space,
+    any closed curves can shrink to a point continuously,
+    this space can be deformed to a sphere.
+\end{conjecture}
+
+\begin{problem}
+    \label{thm-problem-example}
+    回答还是不回答，是个问题。
+\end{problem}
